@@ -1,34 +1,28 @@
 {
   "linh_kien": [
     {
+      "ten": "GPU Tối thiểu (Phiên bản 1)",
       "tu_khoa": "RTX 5060 Ti 16GB",
-      "gia_min": 14000000,
-      "gia_max": 20000000
+      "gia_min": 13000000,
+      "gia_max": 22000000
     },
     {
-      "tu_khoa": "RTX 4090",
-      "gia_min": 40000000,
-      "gia_max": 80000000
+      "ten": "GPU Tối thiểu (Phiên bản 2)",
+      "tu_khoa": "RTX 3090 24GB",
+      "gia_min": 15000000,
+      "gia_max": 28000000
     },
     {
-      "tu_khoa": "Core i5 13400F",
-      "gia_min": 3000000,
-      "gia_max": 5000000
-    },
-    {
+      "ten": "CPU Tối thiểu",
       "tu_khoa": "Core i5 13600K",
-      "gia_min": 6000000,
-      "gia_max": 8500000
+      "gia_min": 5500000,
+      "gia_max": 9000000
     },
     {
-      "tu_khoa": "Core i7 14700K",
-      "gia_min": 9000000,
-      "gia_max": 13000000
-    },
-    {
+      "ten": "SSD Hệ điều hành (1TB)",
       "tu_khoa": "Samsung 990 Pro 1TB",
       "gia_min": 1500000,
-      "gia_max": 3500000
+      "gia_max": 4000000
     }
   ]
 }
