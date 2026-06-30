@@ -99,6 +99,12 @@ def main():
     report_lines.append("# BÁO CÁO CÀO GIÁ LINH KIỆN PC TỰ ĐỘNG")
     report_lines.append(f"*Cập nhật tự động lúc: {datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*\n")
     
+    summary_table = [
+        "## 📊 BẢNG TỔNG HỢP GIÁ",
+        "| Linh kiện | Giá Sàn (Rẻ nhất) | Giá Phổ Biến | Cửa hàng rẻ nhất |",
+        "| :--- | :--- | :--- | :--- |"
+    ]
+    
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(
@@ -136,6 +142,9 @@ def main():
                 report_lines.append(f"  - *Nguồn để ép giá:* [{min_site}]({min_url})")
                 report_lines.append(f"- **Giá Phổ Biến (Trung vị):** {med:,.0f} VNĐ".replace(',', '.'))
                 report_lines.append("")
+                
+                # Them vao bang tom tat
+                summary_table.append(f"| **{q.upper()}** | {min_p:,.0f} đ | {med:,.0f} đ | [{min_site}]({min_url}) |".replace(',', '.'))
             else:
                 report_lines.append(f"## {q.upper()}")
                 report_lines.append(f"- Không thu thập được mức giá chuẩn (Có thể do Cloudflare chặn Bot hoặc thị trường hết hàng).")
@@ -147,9 +156,13 @@ def main():
         
     # Tao thu muc data neu chua co
     os.makedirs("data", exist_ok=True)
+    
+    # Ghep bang tom tat vao report
+    final_report = report_lines[:2] + summary_table + ["\n---\n"] + report_lines[2:]
+    
     filename = f"data/ket_qua_cao_gia_{datetime.datetime.now().strftime('%d_%m_%Y_%Hh%Mm')}.md"
     with open(filename, "w", encoding="utf-8") as f:
-        f.write("\n".join(report_lines))
+        f.write("\n".join(final_report))
     print(f"\n=> Đã lưu báo cáo chi tiết ra file: {filename}")
 
 if __name__ == "__main__":
