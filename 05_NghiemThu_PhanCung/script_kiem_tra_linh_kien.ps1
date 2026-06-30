@@ -84,16 +84,28 @@ foreach ($d in $disks) {
     Write-Log "    Ma Model: $($d.Model)  |  Dung luong: ${sizeGB} GB" "White"
     Write-Log "    Tinh trang SMART (Suc khoe): $($d.Status)" "Cyan"
 }
-Write-Log "    => Dang tai cong cu kiem tra SSD chuyen sau (CrystalDiskInfo) de check gio chay/TBW..." "Yellow"
-$cdiZip = "$env:TEMP\CrystalDiskInfo.zip"
-$cdiFolder = "$env:TEMP\CrystalDiskInfo"
+
+Write-Log "    => Kiem tra hao mon SSD bang cong cu he thong..." "Yellow"
+try {
+    $storages = Get-PhysicalDisk | Get-StorageReliabilityCounter -ErrorAction Stop
+    foreach ($s in $storages) {
+        Write-Log "    => SSD (Device $($s.DeviceId)): Do hao mon (Wear) = $($s.Wear) %" "Cyan"
+    }
+} catch {
+    Write-Log "    (Khong the doc thong so Wear tu he thong)" "DarkGray"
+}
+
+Write-Log "    => Dang tai cong cu kiem tra SSD chuyen sau (CrystalDiskInfo) de check chi tiet..." "Yellow"
+$cdiZip = "$desktopPath\CrystalDiskInfo.zip"
+$cdiFolder = "$desktopPath\CrystalDiskInfo"
 try {
     Invoke-WebRequest -Uri "https://github.com/hiyohiyo/CrystalDiskInfo/releases/download/9.2.2/CrystalDiskInfo9_2_2.zip" -OutFile $cdiZip -ErrorAction Stop
     Expand-Archive -Path $cdiZip -DestinationPath $cdiFolder -Force
-    Write-Log "    => Da tai xong CrystalDiskInfo." "Cyan"
-    Write-Log "    [!] HAY MO THU MUC: $cdiFolder VA CHAY FILE DiskInfo64.exe DE XEM SO GIO CHAY / TBW CUA SSD!" "Magenta"
+    Write-Log "    => Da tai xong CrystalDiskInfo ra ngoai man hinh Desktop." "Cyan"
+    Write-Log "    [!] HAY MO THU MUC: CrystalDiskInfo TREN DESKTOP VA CHAY FILE DiskInfo64.exe DE KIEM TRA!" "Magenta"
+    Remove-Item -Path $cdiZip -Force -ErrorAction SilentlyContinue
 } catch {
-    Write-Log "    (Loi khi tai CrystalDiskInfo. Vui long tu tai thu cong de check so gio chay cua SSD)" "DarkGray"
+    Write-Log "    (Loi khi tai CrystalDiskInfo qua mang. Van co the dung thong so Wear o tren hoac tu tai xuong sau)" "DarkGray"
 }
 Write-Log "" "White"
 
@@ -102,25 +114,41 @@ Write-Log "[5] CARD DO HOA (GPU)" "Green"
 $gpus = Get-CimInstance Win32_VideoController
 foreach ($g in $gpus) {
     Write-Log "    Ten Card (Windows nhan): $($g.Name)" "White"
-    # Lay luon dung luong VRAM tu WMI de doi chieu voi NVIDIA
-    if ($g.Name -match "NVIDIA") {
-        $wmiVRAMGB = [math]::Round($g.AdapterRAM / 1GB, 1)
-        if ($wmiVRAMGB -gt 0) {
-            Write-Log "    VRAM (WMI Windows doc duoc): ${wmiVRAMGB} GB" "Cyan"
-        }
-    }
 }
 
+Write-Log "    Dang doc dung luong VRAM thuc te..." "Yellow"
+$vramFound = $false
+
+# 1. Thu dung nvidia-smi truoc
 try {
     $nvidia = & nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>$null
     if ($nvidia) {
-        Write-Log "    Thong tin VRAM thuc te tu NVIDIA Chip:" "Cyan"
+        Write-Log "    Thong tin tu NVIDIA Driver:" "Cyan"
         foreach ($line in $nvidia) {
-            Write-Log "    => $line" "Yellow"
+            Write-Log "    => $line" "Green"
         }
+        $vramFound = $true
     }
-} catch {
-    Write-Log "    (Luu y: Chua cai Driver NVIDIA nen chua soi duoc VRAM thuc)" "DarkGray"
+} catch { }
+
+# 2. Thu dung dxdiag neu chua cai driver hoac la card hang khac
+if (-not $vramFound) {
+    Write-Log "    (Chua co driver NVIDIA hoac khong ho tro, chuyen sang doc VRAM tu DxDiag...)" "DarkGray"
+    $dxdiagFile = "$env:TEMP\dxdiag_output.txt"
+    try {
+        Start-Process -FilePath "dxdiag" -ArgumentList "/t $dxdiagFile" -Wait -NoNewWindow
+        if (Test-Path $dxdiagFile) {
+            $dxContent = Get-Content $dxdiagFile
+            $vramLine = $dxContent | Where-Object { $_ -match "Display Memory" } | Select-Object -First 1
+            if ($vramLine) {
+                Write-Log "    Thong tin tu Windows DxDiag: $($vramLine.Trim())" "Cyan"
+            } else {
+                Write-Log "    (Khong tim thay thong tin VRAM tu DxDiag)" "Red"
+            }
+        }
+    } catch {
+        Write-Log "    (Loi khi chay DxDiag)" "DarkGray"
+    }
 }
 
 Write-Log "" "White"

@@ -20,7 +20,12 @@ def load_config():
     for item in data.get("linh_kien", []):
         queries.append(item["tu_khoa"])
         price_ranges[item["tu_khoa"]] = (item["gia_min"], item["gia_max"])
-    return queries, price_ranges
+    
+    fixed_costs = data.get("chi_phi_co_dinh", {
+        "option1_16gb": 11500000,
+        "option2_24gb": 15500000
+    })
+    return queries, price_ranges, fixed_costs
 
 def get_expected_range(query, price_ranges):
     for key, (min_p, max_p) in price_ranges.items():
@@ -122,10 +127,10 @@ def calculate_budget_allocation(total_budget):
         lines.append(f"- **{component}** ({weight*100:02.0f}%): ~ {allocated:,.0f} đ".replace(',', '.'))
     return lines
 
-def calculate_build_estimates(scraped_data, timestamp_str):
+def calculate_build_estimates(scraped_data, timestamp_str, fixed_costs):
     # Chi phí cố định ước tính
-    FIXED_OPT1 = 11_500_000 # Option 1 (16GB): Main B, RAM 64GB, Nguồn 750W, Vỏ Mid, Tản khí
-    FIXED_OPT2 = 15_500_000 # Option 2 (24GB): Main Z/B Xịn, RAM 64GB, Nguồn 1000W, Vỏ to, Tản xịn
+    FIXED_OPT1 = fixed_costs.get("option1_16gb", 11500000) # Option 1 (16GB): Main B, RAM 64GB, Nguồn 750W, Vỏ Mid, Tản khí
+    FIXED_OPT2 = fixed_costs.get("option2_24gb", 15500000) # Option 2 (24GB): Main Z/B Xịn, RAM 64GB, Nguồn 1000W, Vỏ to, Tản xịn
     
     # Lấy giá trị rẻ nhất của từng linh kiện để tính toán
     p_5060ti = scraped_data.get("rtx 5060 ti 16gb", 15000000)
@@ -176,7 +181,7 @@ def main():
         except AttributeError:
             pass
 
-    queries, price_ranges = load_config()
+    queries, price_ranges, fixed_costs = load_config()
     if not queries:
         return
         
@@ -267,7 +272,7 @@ def main():
         
     # 2. Xuất file Dự toán PC tổng thể (Output 2)
     file2 = f"data/gia_tham_chieu_tong_the_{file_suffix}.md"
-    estimate_content = calculate_build_estimates(scraped_lowest_prices, timestamp_str)
+    estimate_content = calculate_build_estimates(scraped_lowest_prices, timestamp_str, fixed_costs)
     with open(file2, "w", encoding="utf-8") as f:
         f.write(estimate_content)
         

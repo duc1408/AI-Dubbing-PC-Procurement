@@ -1,4 +1,8 @@
 {
+  "chi_phi_co_dinh": {
+    "option1_16gb": 11500000,
+    "option2_24gb": 15500000
+  },
   "linh_kien": [
     {
       "ten": "GPU Tối thiểu (Phiên bản 1)",
