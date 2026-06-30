@@ -3,6 +3,7 @@ import urllib.parse
 from playwright.sync_api import sync_playwright
 import statistics
 import datetime
+import os
 # Bộ lọc giá thông minh (Dynamic Price Filtering)
 # Dùng để loại bỏ các phụ kiện rẻ tiền hoặc những bộ PC ráp sẵn giá chát chúa
 PRICE_RANGES = {
@@ -144,7 +145,9 @@ def main():
             
         browser.close()
         
-    filename = f"ket_qua_cao_gia_{datetime.datetime.now().strftime('%d_%m_%Y_%Hh%Mm')}.md"
+    # Tao thu muc data neu chua co
+    os.makedirs("data", exist_ok=True)
+    filename = f"data/ket_qua_cao_gia_{datetime.datetime.now().strftime('%d_%m_%Y_%Hh%Mm')}.md"
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(report_lines))
     print(f"\n=> Đã lưu báo cáo chi tiết ra file: {filename}")
