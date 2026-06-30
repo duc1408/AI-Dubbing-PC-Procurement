@@ -61,7 +61,7 @@ def scrape_site(page, url_template, query, site_name):
             print(f"  => Đã tìm thấy {len(unique_prices)} mức giá CHUẨN trên trang:")
             for p in unique_prices[:3]: # Hiển thị 3 mức giá rẻ nhất (giá sàn)
                 print(f"     - {p:,.0f} VNĐ".replace(',', '.'))
-            results = unique_prices
+            results = [{"price": p, "site": site_name, "url": url} for p in unique_prices]
         else:
             print("  => Không tìm thấy mức giá hợp lệ trong biên độ quy định (Hoặc bị Captcha).")
             
@@ -117,14 +117,22 @@ def main():
                 
             if all_valid_prices:
                 # Tính toán thống kê từ TẤT CẢ các nguồn
-                med = statistics.median(all_valid_prices)
-                min_p = min(all_valid_prices)
+                raw_prices = [item["price"] for item in all_valid_prices]
+                med = statistics.median(raw_prices)
+                
+                # Lấy chi tiết nguồn của mức giá rẻ nhất
+                min_obj = min(all_valid_prices, key=lambda x: x["price"])
+                min_p = min_obj["price"]
+                min_site = min_obj["site"]
+                min_url = min_obj["url"]
+                
                 print(f"✅ THỐNG KÊ TOÀN THỊ TRƯỜNG CHO [{q.upper()}]:")
-                print(f"   + Giá Sàn Rẻ Nhất: {min_p:,.0f} VNĐ".replace(',', '.'))
+                print(f"   + Giá Sàn Rẻ Nhất: {min_p:,.0f} VNĐ (Tại {min_site})".replace(',', '.'))
                 print(f"   + Giá Bán Phổ Biến (Trung Vị): {med:,.0f} VNĐ".replace(',', '.'))
                 
                 report_lines.append(f"## {q.upper()}")
                 report_lines.append(f"- **Giá Sàn (Rẻ nhất):** {min_p:,.0f} VNĐ".replace(',', '.'))
+                report_lines.append(f"  - *Nguồn để ép giá:* [{min_site}]({min_url})")
                 report_lines.append(f"- **Giá Phổ Biến (Trung vị):** {med:,.0f} VNĐ".replace(',', '.'))
                 report_lines.append("")
             else:
@@ -136,9 +144,10 @@ def main():
             
         browser.close()
         
-    with open("ket_qua_cao_gia.md", "w", encoding="utf-8") as f:
+    filename = f"ket_qua_cao_gia_{datetime.datetime.now().strftime('%d_%m_%Y')}.md"
+    with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(report_lines))
-    print("\n=> Đã lưu báo cáo chi tiết ra file: ket_qua_cao_gia.md")
+    print(f"\n=> Đã lưu báo cáo chi tiết ra file: {filename}")
 
 if __name__ == "__main__":
     main()
