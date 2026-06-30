@@ -144,7 +144,7 @@ def main():
             
         browser.close()
         
-    filename = f"ket_qua_cao_gia_{datetime.datetime.now().strftime('%d_%m_%Y')}.md"
+    filename = f"ket_qua_cao_gia_{datetime.datetime.now().strftime('%d_%m_%Y_%Hh%Mm')}.md"
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(report_lines))
     print(f"\n=> Đã lưu báo cáo chi tiết ra file: {filename}")
