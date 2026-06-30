@@ -1,5 +1,5 @@
 # DỰ TOÁN CẤU HÌNH PC AI DUBBING (TỰ ĐỘNG)
-*Cập nhật tự động lúc: 30/06/2026 11:54:49 (Dựa trên giá thị trường realtime)*
+*Cập nhật tự động lúc: 30/06/2026 12:29:28 (Dựa trên giá thị trường realtime)*
 
 > [!IMPORTANT]
 > Tổng giá trị được cộng dồn từ mức giá rẻ nhất quét được trên mạng cộng với khoản chi phí cố định ước tính.
