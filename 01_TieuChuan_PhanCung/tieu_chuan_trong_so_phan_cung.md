@@ -25,7 +25,7 @@ Bảng được rà soát và sắp xếp theo mức độ ưu tiên ngân sách
 
 ### 1. GPU (Card Đồ Họa) - Trọng số: 45% (TỐI QUAN TRỌNG)
 **Giải thích:** Linh hồn của hệ thống AI. **VRAM là Vua**. Mua card có VRAM càng lớn càng tốt để nhét vừa model. Bắt buộc dùng NVIDIA vì tương thích chuẩn CUDA.
-*   **Tối thiểu:** 1x NVIDIA RTX 4060 Ti **16GB** (Chống chỉ định bản 8GB).
+*   **Tối thiểu:** 1x NVIDIA RTX 5060 Ti **16GB** (Vua hiệu năng/giá thành thế hệ mới, ưu tiên số 1) hoặc RTX 4060 Ti **16GB** nếu tiết kiệm (Tuyệt đối chống chỉ định các bản 8GB).
 *   **Tiêu chuẩn:** 1x NVIDIA RTX 4090 **24GB** (Có thể tối ưu chi phí bằng RTX 3090 24GB cũ).
 *   **Cao cấp:** **2x** NVIDIA RTX 4090 24GB (Tổng 48GB VRAM) hoặc RTX 6000 Ada (48GB VRAM chuyên nghiệp). Cấu hình này biến máy tính thành một xưởng cày thuê khổng lồ.
 
