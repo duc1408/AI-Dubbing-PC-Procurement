@@ -1,0 +1,6 @@
+# Environments
+venv/
+__pycache__/
+
+# Output files
+BienBan_NghiemThu_AI_Dubbing.txt
