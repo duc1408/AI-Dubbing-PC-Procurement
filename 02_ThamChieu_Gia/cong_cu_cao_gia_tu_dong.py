@@ -7,12 +7,12 @@ import os
 # Bộ lọc giá thông minh (Dynamic Price Filtering)
 # Dùng để loại bỏ các phụ kiện rẻ tiền hoặc những bộ PC ráp sẵn giá chát chúa
 PRICE_RANGES = {
-    "rtx 4060 ti 16gb": (10_000_000, 16_000_000),
-    "rtx 4090": (45_000_000, 85_000_000),
-    "core i5 13400f": (3_000_000, 5_500_000),
-    "core i5 13600k": (6_500_000, 9_500_000),
-    "core i7 14700k": (9_000_000, 13_000_000),
-    "samsung 990 pro 1tb": (2_000_000, 4_000_000)
+    "RTX 5060 Ti 16GB": (14_000_000, 20_000_000),
+    "RTX 4090": (40_000_000, 80_000_000),
+    "Core i5 13400F": (3_000_000, 5_000_000),
+    "Core i5 13600K": (6_000_000, 8_500_000),
+    "Core i7 14700K": (9_000_000, 13_000_000),
+    "Samsung 990 Pro 1TB": (1_500_000, 3_500_000)
 }
 
 def get_expected_range(query):
@@ -72,13 +72,14 @@ def scrape_site(page, url_template, query, site_name):
     return results
 
 def main():
+    # Danh sach linh kien can khao gia
     queries = [
-        "rtx 4060 ti 16gb",
-        "rtx 4090",
-        "core i5 13400f",
-        "core i5 13600k",
-        "core i7 14700k",
-        "samsung 990 pro 1tb"
+        "RTX 5060 Ti 16GB",
+        "RTX 4090",
+        "Core i5 13400F",
+        "Core i5 13600K",
+        "Core i7 14700K",
+        "Samsung 990 Pro 1TB"
     ]
     
     # Bổ sung 6 nguồn bán lẻ PC uy tín nhất Việt Nam

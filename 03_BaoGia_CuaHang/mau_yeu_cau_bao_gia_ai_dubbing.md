@@ -12,7 +12,7 @@ Tư duy build máy cho hệ thống này khác hoàn toàn với PC Gaming. Kín
 
 | Linh Kiện | Trọng Số | Yêu Cầu Kỹ Thuật Chi Tiết (Vui lòng báo giá sát thông số) |
 | :--- | :---: | :--- |
-| **1. GPU (Card Đồ Họa)** | **45%** | **1x NVIDIA RTX 4060 Ti - BẢN 16GB VRAM**.<br>*(Lưu ý: Bắt buộc bản 16GB VRAM. Tuyệt đối không lấy bản 8GB. Không thay bằng card AMD).* |
+| **1. GPU (Card Đồ Họa)** | **45%** | **1x NVIDIA RTX 5060 Ti - BẢN 16GB VRAM**.<br>*(Lưu ý: Nếu không có hàng có thể lấy tạm RTX 4060 Ti 16GB. Bắt buộc bản 16GB VRAM. Tuyệt đối không lấy bản 8GB. Không thay bằng card AMD).* |
 | **2. Nguồn (PSU)** | **12%** | **750W chuẩn 80 Plus Gold** (Chuẩn ATX 3.0 càng tốt). Yêu cầu các hãng Tier A (Corsair, Seasonic, FSP) để tránh sập nguồn đêm. |
 | **3. RAM** | **10%** | **64GB DDR5** (2 thanh x 32GB). Bus 5600 hoặc 6000MHz. Ưu tiên dung lượng khổng lồ để dự phòng tràn VRAM. Không cần Bus cao. |
 | **4. Storage (Ổ cứng)** | **10%** | **1TB NVMe SSD Gen 4**.<br>*(Bắt buộc báo giá dòng có chỉ số độ bền TBW > 1000 như Samsung 990 Pro, WD SN850X vì AI ghi/xoá file rác cường độ rất cao).* |
@@ -60,7 +60,7 @@ Tư duy build máy cho hệ thống này khác hoàn toàn với PC Gaming. Kín
 
 | Linh Kiện | Trọng Số | Yêu Cầu Kỹ Thuật Chi Tiết (Vui lòng báo giá sát thông số) |
 | :--- | :---: | :--- |
-| **1. GPU (Card Đồ Họa)** | **45%** | **1x NVIDIA RTX 4060 Ti - BẢN 16GB VRAM**. <br>*(Bắt buộc giữ nguyên để đảm bảo chạy được AI, không được hạ xuống bản 8GB).* |
+| **1. GPU (Card Đồ Họa)** | **45%** | **1x NVIDIA RTX 5060 Ti - BẢN 16GB VRAM**.<br>*(Bắt buộc giữ nguyên để đảm bảo chạy được AI, không được hạ xuống bản 8GB. Nết hết hàng lấy RTX 4060 Ti 16GB).* |
 | **2. Nguồn (PSU)** | **12%** | **750W chuẩn 80 Plus Bronze / Gold** (VD: Deepcool PK750D, MSI MAG A750BN). |
 | **3. RAM** | **10%** | **64GB DDR5** (Ưu tiên bus 5200MHz để tối ưu chi phí). |
 | **4. Storage (Ổ cứng)** | **10%** | **1TB NVMe SSD Gen 4** có TBW cao (Quyết không cắt giảm ổ cứng để bảo vệ dữ liệu AI). |
